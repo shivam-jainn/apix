@@ -1,15 +1,12 @@
 # apix
 
-To install dependencies:
+A .api / .rest alternative but with super powers 🚀
 
-```bash
-bun install
-```
+## Development Roadmap
 
-To run:
-
-```bash
-bun run index.ts
-```
-
-This project was created using `bun init` in bun v1.2.1. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+[] .api existing features 
+[] auth method support (simple , oauth2 , token)
+[] .env support
+[] vars support 
+[] form builder syntax w/ extensions
+[] extension based GUI support similar to postman
