@@ -1,0 +1,28 @@
+### GET request
+
+GET https://jsonplaceholder.typicode.com/posts/1
+Accept: application/json
+
+### POST request
+POST https://jsonplaceholder.typicode.com/posts
+Content-Type: application/json
+
+{
+  "title": "New Post",
+  "body": "This is a new post created using an .http file",
+  "userId": 1
+}
+
+### PUT request
+PUT https://jsonplaceholder.typicode.com/posts/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "title": "Updated Post",
+  "body": "This post has been updated",
+  "userId": 1
+}
+
+### DELETE request
+DELETE https://jsonplaceholder.typicode.com/posts/1

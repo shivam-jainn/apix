@@ -1,49 +1,50 @@
-#!/usr/bin/env ts-node
+import * as fs from 'fs';
 
-import dotenv from "dotenv";
-import fs from "fs";
-import path from "path";
+class Env {
+  private env: { [key: string]: string } = {};
 
-const ENV_PATH = path.join(__dirname, ".env");
-
-function loadEnv() {
-  if (!fs.existsSync(ENV_PATH)) {
-    console.error(`Error: .env file not found at ${ENV_PATH}`);
-    return;
+  constructor(envPath: string) {
+    this.loadEnv(envPath);
   }
 
-  const result = dotenv.config({ path: ENV_PATH, override: true });
-  if (result.error) {
-    console.error("Error parsing .env file:", result.error);
-    return;
-  }
+  private loadEnv(envPath: string) {
+    try {
+      const envFileContent = fs.readFileSync(envPath, 'utf-8');
+      const lines = envFileContent.split("\n");
 
-  if (result.parsed) {
-    for (const key in result.parsed) {
-      const trimmedKey = key.trim();
-      let trimmedValue = result.parsed[key].trim();
+      for (const line of lines) {
+        const trimmedLine = line.trim();
+        if (!trimmedLine || trimmedLine.startsWith("#")) {
+          continue;
+        }
 
-      if (
-        (trimmedValue.startsWith(`"`) && trimmedValue.endsWith(`"`)) ||
-        (trimmedValue.startsWith(`'`) && trimmedValue.endsWith(`'`))
-      ) {
-        trimmedValue = trimmedValue.slice(1, -1);
+        const [key, value] = trimmedLine.split("=");
+        if (key && value) {
+          const trimmedKey = key.trim();
+          let trimmedValue = value.trim();
+
+          if (
+            (trimmedValue.startsWith(`"`) && trimmedValue.endsWith(`"`)) ||
+            (trimmedValue.startsWith(`'`) && trimmedValue.endsWith(`'`))
+          ) {
+            trimmedValue = trimmedValue.slice(1, -1);
+          }
+
+          this.env[trimmedKey.toUpperCase()] = trimmedValue;
+        }
       }
-
-      process.env[trimmedKey.toUpperCase()] = trimmedValue;
-
-      if (trimmedKey !== key) {
-        delete process.env[key];
-      }
+    } catch (error) {
+      console.error(`Error: .env file not found at ${envPath}`);
     }
   }
+
+  get(key: string): string | undefined {
+    return this.env[key.toUpperCase()];
+  }
 }
 
-if (require.main === module) {
-  loadEnv();
-  console.log("Parsed environment variables:");
-  console.log("USERNAME:", process.env.USERNAME);
-  console.log("PASSWORD:", process.env.PASSWORD);
+function loadEnv(envPath: string): Env {
+  return new Env(envPath);
 }
 
-export { loadEnv };
+export { Env, loadEnv };
