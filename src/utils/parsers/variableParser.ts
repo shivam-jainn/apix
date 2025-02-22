@@ -5,7 +5,8 @@ import * as path from "path";
  * Parses variable assignments in the format:
  *   @@variableName = variable_value
  *
- * Ignores lines that do not start with the "@@" prefix.
+ * If any assignment has an empty value (after trimming and removing quotes),
+ * the parser throws an exception.
  *
  * @param input A string containing one or more variable assignments.
  * @returns An object mapping variable names to their assigned values.
@@ -19,14 +20,24 @@ export function parseVariableAssignments(
   for (const line of lines) {
     const trimmedLine = line.trim();
     if (trimmedLine.startsWith("@@")) {
-      // Remove the "@@" prefix and trim the rest
+      // Remove the "@@" prefix and trim the rest.
       const assignmentLine = trimmedLine.slice(2).trim();
-      // Use regex to capture the variable name and its value.
-      // This regex matches a variable name (non-space, non-"=" characters) followed by "=" and then any value.
-      const match = assignmentLine.match(/^([^\s=]+)\s*=\s*(.+)$/);
+      // Regex to capture variable name and value (value may be empty).
+      const match = assignmentLine.match(/^([^\s=]+)\s*=\s*(.*)$/);
       if (match) {
         const key = match[1].trim();
-        const value = match[2].trim();
+        let value = match[2].trim();
+        // Remove surrounding quotes if present.
+        if (
+          (value.startsWith('"') && value.endsWith('"')) ||
+          (value.startsWith("'") && value.endsWith("'"))
+        ) {
+          value = value.slice(1, -1).trim();
+        }
+        // Throw an exception if the value is empty.
+        if (!value) {
+          throw new Error(`Empty value for variable '${key}' not allowed.`);
+        }
         variables[key] = value;
       }
     }
@@ -36,7 +47,8 @@ export function parseVariableAssignments(
 }
 
 /**
- * (Optional) Reads an assignment file from disk and parses its contents.
+ * Reads an assignment file from disk and parses its contents.
+ *
  * @param filePath The path to the assignment file.
  * @returns An object mapping variable names to their assigned values.
  */
