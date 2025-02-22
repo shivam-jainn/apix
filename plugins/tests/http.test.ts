@@ -25,7 +25,7 @@ describe("HTTP Requests with Different File Types", () => {
     const response = await sendRequest(
       "POST",
       TEST_URL,
-      { file: "tests/sample.txt" }, // Fixed path
+      { file: "assets/tests/sample.txt" }, // Fixed path
       {},
       ContentType.FORM_DATA
     );
@@ -36,7 +36,7 @@ describe("HTTP Requests with Different File Types", () => {
     const response = await sendRequest(
       "POST",
       TEST_URL,
-      { file: "tests/sample.csv" },
+      { file: "assets/tests/sample.csv" },
       {},
       ContentType.FORM_DATA
     );
@@ -47,7 +47,7 @@ describe("HTTP Requests with Different File Types", () => {
     const response = await sendRequest(
       "POST",
       TEST_URL,
-      { file: "tests/sample.zip" },
+      { file: "assets/tests/sample.zip" },
       {},
       ContentType.FORM_DATA
     );
@@ -58,7 +58,7 @@ describe("HTTP Requests with Different File Types", () => {
     const response = await sendRequest(
       "POST",
       TEST_URL,
-      { file: "tests/sample.xml" },
+      { file: "assets/tests/sample.xml" },
       {},
       ContentType.FORM_DATA
     );
