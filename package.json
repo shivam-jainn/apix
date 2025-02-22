@@ -2,8 +2,13 @@
   "name": "apix",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "test": "vitest",
+    "test:watch": "vitest --watch"
+  },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "vitest": "^3.0.6"
   },
   "peerDependencies": {
     "typescript": "^5.7.3"
