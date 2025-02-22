@@ -13,7 +13,7 @@ env = dotenv("file_location")
 @@baseurl = "https://jfid.disjd"
 
 ---
-# @name JSONgvgvbgvgv
+# @name JSON get request
 
 GET baseurl/sfohs 
 Auth Method : basicAuth(env.USERNAME,env.PASSWORD)
