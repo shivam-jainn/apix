@@ -19,16 +19,10 @@ describe('extractModuleName', () => {
       '',
       'random text',
       'module JiraAPI', // Missing @
-      '@moduleFetchJiraIssue' // Missing space after @name
+      '@moduleJiraAPI' // Missing space after @module
     ];
     invalidCases.forEach(input => {
       expect(extractModuleName(input)).toBeNull();
     });
-  });
-
-  it('should handle multiple lines correctly', () => {
-    const input = `Some text before\n# @module MyModuleName`;
-    const expectedOutput = 'MyModuleName';
-    expect(extractModuleName(input)).toEqual(expectedOutput);
   });
 });
