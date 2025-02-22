@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { sendRequest } from "../../plugins/http/sendRequest.js";
-import { ContentType } from "../../src/types/contentsType.js";
+import { sendRequest } from "../sendRequest.js";
+import { ContentType } from "../../../src/types/contentsType.js";
 
 const TEST_URL = "https://jsonplaceholder.typicode.com/posts";
 
