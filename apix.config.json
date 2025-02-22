@@ -1,0 +1,14 @@
+{
+    "version": "1.0",
+    "baseUrl": "src",
+    "paths": {
+      "@app/*": ["app/*"],
+      "@config/*": ["app/_config/*"],
+      "@environment/*": ["environments/*"],
+      "@shared/*": ["app/_shared/*"],
+      "@helpers/*": ["helpers/*"],
+      "@parsers/*": ["core/parsers/*"],
+      "@auth/*": ["core/auth/*"],
+      "@modules/*": ["modules/*"]
+    }
+}
