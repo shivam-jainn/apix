@@ -1,49 +1,50 @@
 
-import jira from "@/atlassian/jira.apix"
-import github from "@/github.apix"
+import {GET} from parsers/http
+import {WS} from parsers/ws
+import * from parsers/ddjj
+import basicAuth from auth/basic
 
-# ===========================
-# Request: Fetch a Jira Issue (REST)
-# ===========================
-@group "jira/issues/fetch"
-@name "FetchJiraIssue"
-@@ REST.Telemetry
-@@ REST.Auth : basic {env_file.JIRA_BASIC_AUTH_TOKEN}
+import @/../../moduleName
 
-GET {jira.baseUrl}/{jira.apiVersion}/issue/{issueId}
-HEADERS
-  Content-Type: application/json
-  Accept: application/json
+env = dotenv("file_location")
 
-# ===========================
-# Request: Create a GitHub Issue (GraphQL)
-# ===========================
-@group "github/issues/create"
-@name "CreateGitHubIssue"
-@@ GRAPHQL.Auth : token {env_file.GITHUB_TOKEN}
+@@baseurl = "https://jsonplaceholder.typicode.com"
 
-GRAPHQL MUTATION {github.baseUrl}/graphql
+---
+# @name JSON hahsuhsa quhiw
+
+GET baseurl/posts/1 
+basicAuth(env.USERNAME,env.PASSWORD)
+
+---
+
+---
+POST https://jsonplaceholder.typicode.com/posts
+
 {
-  "query": "mutation CreateIssue($input: CreateIssueInput!) { createIssue(input: $input) { issue { id title } } }",
-  "variables": {
-    "input": {
-      "repositoryId": "{repoId}",
-      "title": "{issueTitle}",
-      "body": "{issueBody}"
-    }
-  }
+  "title": "New Post",
+  "body": "This is a new post created using an .http file",
+  "userId": 1
 }
 
-# ===========================
-# Request: WebSocket Chat Connection
-# ===========================
-@group "chat/ws"
-@name "ChatSubscription"
-@@ WS.Reconnect : true
-@@ WS.Ping : 30s
+---
 
-WS CONNECT {chatWsUrl}/connect
+---
+# @name WebSocket Echo Test
+WS wss://ws.postman-echo.com/raw
+
 {
-  "event": "subscribe",
-  "channel": "chat"
+    "message": "Hello WebSocket Server!"
 }
+
+---
+
+# @name WebSocket Public Demo
+WS wss://demo.piesocket.com/v3/channel_1
+
+{
+    "type": "message",
+    "text": "Testing websocket connection"
+}
+
+---

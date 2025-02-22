@@ -1,12 +1,9 @@
-function basicAuth(username:String, password:String):{Authorization:String} {
-    const sanitizedUsername = username.replace(/\r|\n/g, '');
-    const sanitizedPassword = password.replace(/\r|\n/g, '');
-    
-    const token = Buffer.from(`${sanitizedUsername}:${sanitizedPassword}`).toString('base64');
-    return {
-      Authorization: `Basic ${token}`
-    };
-  }
+function basicAuth(username: string, password: string): { Authorization: string } {
+  const base64Credentials = Buffer.from(`${username}:${password}`).toString('base64');
+  return {
+      Authorization: `Basic ${base64Credentials}` as string
+  };
+}
   
   export default basicAuth;
   

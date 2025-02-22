@@ -25,6 +25,8 @@ Request Body
 }
 
 ---
+
+---
 # @name WS binance
 
 WS ws_url
@@ -33,3 +35,4 @@ message body type
 message body
 
 
+---

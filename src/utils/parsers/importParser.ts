@@ -1,7 +1,7 @@
 import path from "path";
 import { parseConfig } from "./configParser.js";
 
-const config = parseConfig("apix.config.json");
+const config = parseConfig("/Users/shivamjain/Code/apix/apix.config.json");
 
 function resolveAlias(modulePath: string): string {
   if (modulePath.startsWith("@/")) {

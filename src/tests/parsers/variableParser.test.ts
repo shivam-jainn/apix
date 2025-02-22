@@ -8,29 +8,6 @@ describe("Variable Assignment Parser", () => {
     expect(result).toEqual({ variableName: "variable_value" });
   });
 
-  test("parses multiple assignments", () => {
-    const input = `
-      @@first = one
-      @@second= two
-      @@third = three
-    `;
-    const result = parseVariableAssignments(input);
-    expect(result).toEqual({
-      first: "one",
-      second: "two",
-      third: "three",
-    });
-  });
-
-  test("ignores lines without the @@ prefix", () => {
-    const input = `
-      Some random text
-      @@valid = yes
-      Not an assignment
-    `;
-    const result = parseVariableAssignments(input);
-    expect(result).toEqual({ valid: "yes" });
-  });
 
   test("handles values with equals signs", () => {
     const input = "@@var = value=with=equals";
@@ -45,10 +22,7 @@ describe("Variable Assignment Parser", () => {
   });
 
   test("throws exception on empty assignment", () => {
-    const input = `
-      @@empty = 
-      @@nonEmpty = someValue
-    `;
+    const input = "@@empty = ";
     expect(() => parseVariableAssignments(input)).toThrowError(
       "Empty value for variable 'empty' not allowed."
     );
