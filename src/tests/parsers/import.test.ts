@@ -82,4 +82,10 @@ describe('Import Parser', () => {
     const expectedOutput = { type: 'Import', module: 'module', imports: ['something'] };
     expect(importParser(input)).toEqual(expectedOutput);
   });
+
+  it('should handle @ in paths for base path', ()=>{
+    const input = 'import { something } from "@/tests/test_assets/github.apix";';
+    const expectedOutput = { type: 'Import', module: './src/tests/test_assets/github.apix', imports: ['something'] };
+    expect(importParser(input)).toEqual(expectedOutput);
+  });
 });
