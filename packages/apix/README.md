@@ -1,6 +1,6 @@
 # apix README
 
-This is the README for your extension "apix". After writing up a brief description, we recommend including the following sections.
+.apix is alternative to .http and httpyac with better support for vars and envs
 
 ## Features
 
