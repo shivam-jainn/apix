@@ -5,10 +5,10 @@ import { parseVariableAssignments } from './utils/parsers/variableParser.js';
 import { extractNameRequest } from './utils/parsers/nameParser.js';
 import { parseConfig } from './utils/parsers/configParser.js';
 import { loadEnv } from './utils/parsers/envParser.js';
-import { sendRequest } from '../plugins/http/sendRequest.js';
+import { sendRequest } from '../plugins/http/src/sendRequest.js';
 import basicAuth from './utils/authentication/basic.js';
 import bearerAuth from './utils/authentication/bearerToken.js';
-import { ContentType } from './types/contentsType.js';
+import { ContentType } from '@apix/types';
 
 interface RequestBlock {
     name: string | null;

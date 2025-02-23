@@ -1,4 +1,4 @@
-import { ContentType } from "../../src/types/contentsType.js";
+import { ContentType } from "@apix/types";
 
 export async function sendRequest(
   method: string,

@@ -2,18 +2,18 @@
   "name": "apix",
   "module": "index.ts",
   "type": "module",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "test": "vitest",
-    "test:watch": "vitest --watch"
+    "preinstall": "bun run build:types",
+    "build:types": "cd packages/types && bun run build",
+    "test": "vitest"
   },
   "devDependencies": {
-    "@types/bun": "latest",
+    "@types/node": "^22.13.5",
+    "bun-types": "^1.2.3",
     "vitest": "^3.0.6"
-  },
-  "peerDependencies": {
-    "typescript": "^5.7.3"
-  },
-  "dependencies": {
-    "dotenv": "^16.4.7"
   }
 }
