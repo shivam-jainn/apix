@@ -20,11 +20,12 @@ interface RequestBlock {
     headers: Record<string, string>;
 }
 
-class RequestProcessor {
+export default class RequestProcessor {
     private variables: Record<string, string> = {};
     private importedMethods: string[] = [];
     private env;
     private config;
+    private outputs: any[] = [];
 
     constructor() {
         this.config = parseConfig('/Users/shivamjain/Code/apix/apix.config.json');
@@ -194,6 +195,76 @@ class RequestProcessor {
             console.error('Error processing file:', error);
             throw error;
         }
+    }
+
+    private async finalizeRequest(request: RequestBlock | null, bodyLines: string[]): Promise<void> {
+        if (request) {
+            // Substitute variables in the body
+            const bodyText = bodyLines.join('\n');
+            const substitutedBody = this.substituteVariables(bodyText);
+    
+            // Parse body as JSON
+            try {
+                request.body = JSON.parse(substitutedBody);
+            } catch (error) {
+                console.error('Invalid JSON body:', error);
+                return;
+            }
+    
+            // Execute the request and capture output
+            try {
+                const response = await this.executeRequest(request);
+                this.outputs.push(response); // Store response for rendering
+            } catch (error) {
+                console.error('Request execution error:', error);
+            }
+        }
+    }
+
+    public async processCode(code: string): Promise<any[]> {
+        const lines = code.split('\n').map(line => line.trim());
+        let outputs: any[] = [];
+        let currentRequest: RequestBlock | null = null;
+        let isInBlock = false;
+        let bodyLines: string[] = [];
+    
+        for (const line of lines) {
+            if (line === '---') {
+                if (isInBlock) {
+                    await this.finalizeRequest(currentRequest, bodyLines);
+                    isInBlock = false;
+                    currentRequest = null;
+                    bodyLines = [];
+                } else {
+                    isInBlock = true;
+                    currentRequest = {
+                        name: null,
+                        method: 'GET',
+                        url: '',
+                        authType: null,
+                        contentType: ContentType.JSON,
+                        body: {},
+                        headers: {},
+                    };
+                }
+                continue;
+            }
+    
+            if (!isInBlock) {
+                this.processMemoryLine(line);
+            } else {
+                this.processRequestLine(line, currentRequest);
+                if (line.trimLeft().startsWith('{')) {
+                    bodyLines.push(line);
+                }
+            }
+        }
+    
+        if (isInBlock && currentRequest) {
+            await this.finalizeRequest(currentRequest, bodyLines);
+        }
+    
+        return outputs;
     }
 }
 
