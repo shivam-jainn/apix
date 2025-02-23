@@ -2,13 +2,15 @@
   "name": "apix",
   "displayName": "apix",
   "description": ".apix vscode extension",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.97.0"
   },
+  "publisher": "ShivamJainn",
   "categories": [
     "Other"
   ],
+  "icon": "./apix.jpeg",
   "activationEvents": ["*"],
   "main": "./out/extension.js",
   "contributes": {

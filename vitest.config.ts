@@ -1,4 +1,7 @@
 import { defineConfig } from 'vitest/config';
+import * as path from 'path';
+
+const configPath = path.resolve(__dirname, '../../vitest.config.ts');
 
 export default defineConfig({
   test: {
