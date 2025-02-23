@@ -1,7 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { sendRequest } from "../sendRequest.js";
-import { ContentType } from "../../../src/types/contentsType.js";
-
+import { sendRequest } from "../src/sendRequest.js";
+import { ContentType } from "@apix/types";
 const TEST_URL = "https://jsonplaceholder.typicode.com/posts";
 
 describe("HTTP Requests with Different File Types", () => {

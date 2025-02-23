@@ -18,11 +18,17 @@ class Env {
           continue;
         }
 
-        const [key, value] = trimmedLine.split("=");
-        if (key && value) {
+        const [key, ...valueParts] = trimmedLine.split("="); // Handle values with '='
+        if (key) {
           const trimmedKey = key.trim();
-          let trimmedValue = value.trim();
+          let trimmedValue = valueParts.join("=").trim(); // Preserve "=" in values
 
+          // Handle empty values explicitly
+          if (trimmedValue === undefined) {
+            trimmedValue = "";
+          }
+
+          // Remove surrounding quotes
           if (
             (trimmedValue.startsWith(`"`) && trimmedValue.endsWith(`"`)) ||
             (trimmedValue.startsWith(`'`) && trimmedValue.endsWith(`'`))

@@ -1,0 +1,9 @@
+{
+  "name": "@apix/http",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@apix/types": "workspace:*"
+  }
+}
