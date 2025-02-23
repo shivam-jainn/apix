@@ -2,6 +2,8 @@
 
 A .api / .rest alternative but with super powers 🚀
 
+https://api--x.vercel.app/
+
 ## Development Roadmap
 
 [] .api existing features 
